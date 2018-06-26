@@ -1,3 +1,17 @@
+$(document).ready(function() {
+  $('select').material_select();
+  $.ajax({
+    url: "server/app.php",
+    type: "GET",
+    success: function (elemento){
+      console.log(elemento);
+      for (var i = 0; i < elemento.length; i++) {
+        var insertar = "<option value='"+elemento.ciudad+"'>"+elemento.ciudad+"</option>"
+        $("#selectCiudad option").append(insertar);
+      }
+    }
+  })
+});
 /*
   Creación de una función personalizada para jQuery que detecta cuando se detiene el scroll en la página
 */
@@ -50,7 +64,7 @@ function playVideoOnScroll(){
 
 inicializarSlider();
 // playVideoOnScroll();
-
+/***** Poblar Todos *****/
 $("div.card button").click(function(){
   $.ajax({
     url: "server/app.php",
@@ -60,31 +74,8 @@ $("div.card button").click(function(){
       for (var i = 0; i < data.length; i++) {
         var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+data[i].Direccion+"</p><p>Ciudad: "+data[i].Ciudad+"</p><p>Telefono: "+data[i].Telefono+"</p><p>Código postal: "+data[i].Codigo_Postal+"</p><p>Tipo: "+data[i].Tipo+"</p><p class='precioTexto'>Precio: "+data[i].Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
         $("div.tituloContenido.card").append(insertar);
-      }
-
-
-        // var insertar = "<div>"+elemento.Direccion+"</div>";
-        // $("div.colContenido div.card").append(data[0].Direccion);
-      //
-      // })
-
+      };
     }
-
-  })
-
+  });
 })
-// <div class='card'>
-// <div class='card-image'><img src='img/home.jpg'>
-// </div><div class='card-content'>
-//   <p>Dirección: +data[i].Direccion</p>
-//   <p>Ciudad: +data[i].Ciudad+</p>
-//   <p>Telefono: +data[i].Telefono+</p>
-//   <p>Código postal: +data[i].Codigo_Postal+</p>
-//   <p>Tipo: +data[i].Tipo+</p>
-//   <p>Precio: +data[i].Precio+</p>
-// </div>
-// </div>
-
-// $(document).ready(function() {
-// $('select').material_select();
-// });
+/***** Fin *****/
