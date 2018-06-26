@@ -8,7 +8,6 @@ video#vidFondo {
     left: 0;
     top: 0;
     background-size: cover;
-
 }
 
 .contenedor{
@@ -130,12 +129,15 @@ video#vidFondo {
   display: flex;
   flex-flow: row wrap;
 }
-.itemMostrado img{
+.itemMostrado .card-image{
   width: 35% !important;
+}
+.card-image img{
+  height: 100%;
 }
 .precioTexto{
   font-size: 1.3rem;
-  color: #ffab40;
+  color: #ffab40 !important;
 }
 .card-stacked{
   width: 65%;
