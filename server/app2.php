@@ -20,5 +20,4 @@ $ciudades = array_unique($ciudades); //eliminamos valores que se repitan
 fclose($file); // cerramos archivo
 // print_r($ciudades); // imprimimos
 echo json_encode($ciudades);
-
  ?>

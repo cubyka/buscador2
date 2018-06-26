@@ -1,12 +1,16 @@
 $(document).ready(function() {
   $('select').material_select();
   $.ajax({
-    url: "server/app.php",
+    url: "server/app2.php",
     type: "GET",
     success: function (elemento){
-      console.log(elemento);
-      for (var i = 0; i < elemento.length; i++) {
-        var insertar = "<option value='"+elemento.ciudad+"'>"+elemento.ciudad+"</option>"
+      var elemento = JSON.parse(elemento);
+      var listaCiudades = [];
+      listaCiudades.push(elemento);
+      console.log(listaCiudades[0][0])
+      for (var i = 0; i < listaCiudades.length; i++) {
+        console.log(listaCiudades[0][i])
+        var insertar = "<option value='"+listaCiudades[0][i]+"'>"+listaCiudades[0][i]+"</option>"
         $("#selectCiudad option").append(insertar);
       }
     }
@@ -71,6 +75,7 @@ $("div.card button").click(function(){
     type: "GET",
     success: function (data){
       var data = JSON.parse(data);
+      console.log(data);
       for (var i = 0; i < data.length; i++) {
         var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+data[i].Direccion+"</p><p>Ciudad: "+data[i].Ciudad+"</p><p>Telefono: "+data[i].Telefono+"</p><p>Código postal: "+data[i].Codigo_Postal+"</p><p>Tipo: "+data[i].Tipo+"</p><p class='precioTexto'>Precio: "+data[i].Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
         $("div.tituloContenido.card").append(insertar);
