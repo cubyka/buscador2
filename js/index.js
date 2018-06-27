@@ -6,10 +6,10 @@ $(document).ready(function() {
     success: function (elemento){
       var elemento = JSON.parse(elemento);
       var listaCiudades = [];
-      listaCiudades.push(elemento);
-      console.log(listaCiudades[0][0])
+      listaCiudades.push(elemento)
+      console.log(listaCiudades)
       for (var i = 0; i < listaCiudades.length; i++) {
-        console.log(listaCiudades[0][i])
+        console.log(listaCiudades[0][1])
         var insertar = "<option value='"+listaCiudades[0][i]+"'>"+listaCiudades[0][i]+"</option>"
         $("#selectCiudad option").append(insertar);
       }
