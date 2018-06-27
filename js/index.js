@@ -4,21 +4,27 @@ $(document).ready(function() {
     url: "server/app2.php",
     type: "GET",
     success: function (elemento){
-      var elemento = JSON.parse(elemento);
+      // elemento = JSON.parse(elemento)
       console.log(elemento);
-      console.log(elemento[1]);
-      for (var i = 0; i < Object.keys(elemento).length; i++) {
-        console.log(elemento[i]);
-        if (typeof elemento[i]!="undefined") {
-          var listaCiudades =[]
-          for (var r = 0; r < array.length; r++) {
-            listaCiudades[r].push(elemento[i])
-            console.log(listaCiudades)
-            // var insertar = "<option value='"+elemento[i]+"'>"+elemento[i]+"</option>"
-            //   $("#selectCiudad option").append(insertar);
-          }
-        }
-      }
+      console.log(elemento[0].i)
+      $.each(elemento, function (i, elemento) {
+        var insertar = "<option value='" + elemento[i] + "'>" + elemento[i] + "</option>"
+        $("#selectCiudad option").append(insertar);
+      })
+
+      // console.log(elemento[1]);
+      // for (var i = 0; i < Object.keys(elemento).length; i++) {
+      //   console.log(elemento[i]);
+      //   if (typeof elemento[i]!="undefined") {
+      //     var listaCiudades =[]
+      //     for (var r = 0; r < array.length; r++) {
+      //       listaCiudades[r].push(elemento[i])
+      //       console.log(listaCiudades)
+      //       // var insertar = "<option value='"+elemento[i]+"'>"+elemento[i]+"</option>"
+      //       //   $("#selectCiudad option").append(insertar);
+      //     }
+      //   }
+      // }
       // var listaCiudades = [];
       // listaCiudades.push(elemento)
       // console.log(listaCiudades)
