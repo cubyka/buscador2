@@ -16,8 +16,13 @@ foreach ($data as $key => $elemento) {
   $ciudades[] = $elemento->Ciudad;
 }
 $ciudades = array_unique($ciudades); //eliminamos valores que se repitan
-
+// $ciudadesOpt = "";
+// foreach ($ciudades as $ciudad) {
+//   $ciudadesOpt .= "<option value=\"$ciudad\">$ciudad</option>";
+// }
+// echo $ciudadesOpt;
 fclose($file); // cerramos archivo
 // print_r($ciudades); // imprimimos
 echo json_encode($ciudades);
+
  ?>
