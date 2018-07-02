@@ -46,6 +46,10 @@ $("#submitButton").click(function(){
       console.log(dataResult)
       elementos = JSON.Parse(dataResult)
       console.log(elementos);
+      $.each(elementos, function(i, listaElementos){
+        var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+listaElementos.Direccion+"</p><p>Ciudad: "+listaElementos.Ciudad+"</p><p>Telefono: "+listaElementos.Telefono+"</p><p>Código postal: "+listaElementos.Codigo_Postal+"</p><p>Tipo: "+listaElementos.Tipo+"</p><p class='precioTexto'>Precio: "+listaElementos.Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
+        $("div.tituloContenido.card").append(insertar);
+      })
     }
   })
 })
