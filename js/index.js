@@ -1,41 +1,52 @@
-$(document).ready(function() {
-  $('select').material_select();
+$(document).ready(function () {
   $.ajax({
-    url: "server/app2.php",
+    url: "server/ciudad.php",
+    type: "GET",
+    success: function (elemento) {
+      $.each(JSON.parse(elemento), function (i, listaCiudades) {
+        var insertar = "<option value='" + listaCiudades + "'>" + listaCiudades + "</option>"
+        $("#selectCiudad").append(insertar);
+      })
+      // $('select').material_select();
+    }
+ })
+  $.ajax({
+    url: "server/tipo.php",
     type: "GET",
     success: function (elemento){
-      // elemento = JSON.parse(elemento)
-      console.log(elemento);
-      console.log(elemento[0].i)
-      $.each(elemento, function (i, elemento) {
-        var insertar = "<option value='" + elemento[i] + "'>" + elemento[i] + "</option>"
-        $("#selectCiudad option").append(insertar);
+      elemento = JSON.parse(elemento)
+      $.each(elemento, function(i, listaTipo){
+        var insertar = "<option value='" + listaTipo + "'>" + listaTipo + "</option>"
+        $("#selectTipo").append(insertar);
       })
-
-      // console.log(elemento[1]);
-      // for (var i = 0; i < Object.keys(elemento).length; i++) {
-      //   console.log(elemento[i]);
-      //   if (typeof elemento[i]!="undefined") {
-      //     var listaCiudades =[]
-      //     for (var r = 0; r < array.length; r++) {
-      //       listaCiudades[r].push(elemento[i])
-      //       console.log(listaCiudades)
-      //       // var insertar = "<option value='"+elemento[i]+"'>"+elemento[i]+"</option>"
-      //       //   $("#selectCiudad option").append(insertar);
-      //     }
-      //   }
-      // }
-      // var listaCiudades = [];
-      // listaCiudades.push(elemento)
-      // console.log(listaCiudades)
-      // for (var i = 0; i < listaCiudades.length; i++) {
-      //   console.log(listaCiudades[0][1])
-      //   var insertar = "<option value='"+listaCiudades[0][i]+"'>"+listaCiudades[0][i]+"</option>"
-      //   $("#selectCiudad option").append(insertar);
-      // }
+      $('select').material_select();
     }
   })
 });
+
+$("#submitButton").click(function(){
+  event.preventDefault();
+  var data1 = $('select[name="ciudad"] option:selected').val();
+  var data2 = $('select[name="tipo"] option:selected').val();
+  /*
+  traemos los valores del slider que estan en una cadena de texto separados por ;
+  y los separamos con slpit. Recordar que la implementacion del input range Slider
+  se hizo con un plugin llamado ionSlider, implentado en line 57
+  */
+  var data3 = $("#rangoPrecio").val().split(";")[0];
+  var data4 = $("#rangoPrecio").val().split(";")[1];
+  $.ajax({
+    url: "server/buscador.php",
+    type: "GET",
+    data: { ciudad: data1, tipo: data2, ini: data3, fin: data4 },
+    /* Todo lo anterior se puede opitmizar con:
+    data: { ciudad: $('select[name="ciudad"] option:selected').val(), tipo: $('select[name="tipo"] option:selected').val() , ini: $("#rangoPrecio").val().split(";")[0], fin: $("#rangoPrecio").val().split(";")[1] },
+    */
+    sucess: function (dataResult){
+      console.log(dataResult)
+    }
+  })
+})
 /*
   Creación de una función personalizada para jQuery que detecta cuando se detiene el scroll en la página
 */
