@@ -44,6 +44,8 @@ $("#submitButton").click(function(){
     */
     sucess: function (dataResult){
       console.log(dataResult)
+      elementos = JSON.Parse(dataResult)
+      console.log(elementos);
     }
   })
 })
