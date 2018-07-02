@@ -42,13 +42,12 @@ $("#submitButton").click(function(){
     /* Todo lo anterior se puede opitmizar con:
     data: { ciudad: $('select[name="ciudad"] option:selected').val(), tipo: $('select[name="tipo"] option:selected').val() , ini: $("#rangoPrecio").val().split(";")[0], fin: $("#rangoPrecio").val().split(";")[1] },
     */
-    sucess: function (dataResult){
-      console.log(dataResult)
-      elementos = JSON.Parse(dataResult)
-      console.log(elementos);
+    success: function (dataResult){
+      $("div.cardhorizontal.itemMostrado").remove();
+      elementos = JSON.parse(dataResult)
       $.each(elementos, function(i, listaElementos){
         var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+listaElementos.Direccion+"</p><p>Ciudad: "+listaElementos.Ciudad+"</p><p>Telefono: "+listaElementos.Telefono+"</p><p>Código postal: "+listaElementos.Codigo_Postal+"</p><p>Tipo: "+listaElementos.Tipo+"</p><p class='precioTexto'>Precio: "+listaElementos.Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
-        $("div.tituloContenido.card").append(insertar);
+        $("div.tituloContenido.card").html(insertar);
       })
     }
   })
@@ -111,11 +110,11 @@ $("div.card button").click(function(){
     url: "server/app.php",
     type: "GET",
     success: function (data){
+      $("div.cardhorizontal.itemMostrado").remove();
       var data = JSON.parse(data);
-      console.log(data);
       for (var i = 0; i < data.length; i++) {
         var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+data[i].Direccion+"</p><p>Ciudad: "+data[i].Ciudad+"</p><p>Telefono: "+data[i].Telefono+"</p><p>Código postal: "+data[i].Codigo_Postal+"</p><p>Tipo: "+data[i].Tipo+"</p><p class='precioTexto'>Precio: "+data[i].Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
-        $("div.tituloContenido.card").append(insertar);
+        $("div.tituloContenido.card").html(insertar);
       };
     }
   });
