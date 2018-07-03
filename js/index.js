@@ -22,36 +22,53 @@ $(document).ready(function () {
       $('select').material_select();
     }
   })
+
+  $("#submitButton").click(function(){
+    $(".itemMostrado").remove();
+    event.preventDefault();
+    var data1 = $('select[name="ciudad"] option:selected').val();
+    var data2 = $('select[name="tipo"] option:selected').val();
+    /*
+    traemos los valores del slider que estan en una cadena de texto separados por ;
+    y los separamos con slpit. Recordar que la implementacion del input range Slider
+    se hizo con un plugin llamado ionSlider, implentado en line 57
+    */
+    var data3 = $("#rangoPrecio").val().split(";")[0];
+    var data4 = $("#rangoPrecio").val().split(";")[1];
+    $.ajax({
+      url: "server/buscador.php",
+      type: "GET",
+      data: { ciudad: data1, tipo: data2, ini: data3, fin: data4 },
+      /* Todo lo anterior se puede opitmizar con:
+      data: { ciudad: $('select[name="ciudad"] option:selected').val(), tipo: $('select[name="tipo"] option:selected').val() , ini: $("#rangoPrecio").val().split(";")[0], fin: $("#rangoPrecio").val().split(";")[1] },
+      */
+      success: function (dataResult){
+        elementos = JSON.parse(dataResult)
+        $.each(elementos, function(i, listaElementos){
+          var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+listaElementos.Direccion+"</p><p>Ciudad: "+listaElementos.Ciudad+"</p><p>Telefono: "+listaElementos.Telefono+"</p><p>Código postal: "+listaElementos.Codigo_Postal+"</p><p>Tipo: "+listaElementos.Tipo+"</p><p class='precioTexto'>Precio: "+listaElementos.Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
+          $("div.tituloContenido.card").append(insertar);
+        })
+      }
+    })
+  })
+  /***** Poblar Todos *****/
+  $("div.card button").click(function(){
+    $(".itemMostrado").remove();
+    $.ajax({
+      url: "server/app.php",
+      type: "GET",
+      success: function (data){
+        var data = JSON.parse(data);
+        for (var i = 0; i < data.length; i++) {
+          var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+data[i].Direccion+"</p><p>Ciudad: "+data[i].Ciudad+"</p><p>Telefono: "+data[i].Telefono+"</p><p>Código postal: "+data[i].Codigo_Postal+"</p><p>Tipo: "+data[i].Tipo+"</p><p class='precioTexto'>Precio: "+data[i].Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
+          $("div.tituloContenido.card").append(insertar);
+        };
+      }
+    });
+  })
 });
 
-$("#submitButton").click(function(){
-  event.preventDefault();
-  var data1 = $('select[name="ciudad"] option:selected').val();
-  var data2 = $('select[name="tipo"] option:selected').val();
-  /*
-  traemos los valores del slider que estan en una cadena de texto separados por ;
-  y los separamos con slpit. Recordar que la implementacion del input range Slider
-  se hizo con un plugin llamado ionSlider, implentado en line 57
-  */
-  var data3 = $("#rangoPrecio").val().split(";")[0];
-  var data4 = $("#rangoPrecio").val().split(";")[1];
-  $.ajax({
-    url: "server/buscador.php",
-    type: "GET",
-    data: { ciudad: data1, tipo: data2, ini: data3, fin: data4 },
-    /* Todo lo anterior se puede opitmizar con:
-    data: { ciudad: $('select[name="ciudad"] option:selected').val(), tipo: $('select[name="tipo"] option:selected').val() , ini: $("#rangoPrecio").val().split(";")[0], fin: $("#rangoPrecio").val().split(";")[1] },
-    */
-    success: function (dataResult){
-      $("div.cardhorizontal.itemMostrado").remove();
-      elementos = JSON.parse(dataResult)
-      $.each(elementos, function(i, listaElementos){
-        var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+listaElementos.Direccion+"</p><p>Ciudad: "+listaElementos.Ciudad+"</p><p>Telefono: "+listaElementos.Telefono+"</p><p>Código postal: "+listaElementos.Codigo_Postal+"</p><p>Tipo: "+listaElementos.Tipo+"</p><p class='precioTexto'>Precio: "+listaElementos.Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
-        $("div.tituloContenido.card").html(insertar);
-      })
-    }
-  })
-})
+
 /*
   Creación de una función personalizada para jQuery que detecta cuando se detiene el scroll en la página
 */
@@ -104,19 +121,3 @@ function playVideoOnScroll(){
 
 inicializarSlider();
 // playVideoOnScroll();
-/***** Poblar Todos *****/
-$("div.card button").click(function(){
-  $.ajax({
-    url: "server/app.php",
-    type: "GET",
-    success: function (data){
-      $("div.cardhorizontal.itemMostrado").remove();
-      var data = JSON.parse(data);
-      for (var i = 0; i < data.length; i++) {
-        var insertar = "<div class='card horizontal itemMostrado'><div class='card-image'><img src='img/home.jpg'></div><div class='card-stacked'><div class='card-content'><p>Dirección: "+data[i].Direccion+"</p><p>Ciudad: "+data[i].Ciudad+"</p><p>Telefono: "+data[i].Telefono+"</p><p>Código postal: "+data[i].Codigo_Postal+"</p><p>Tipo: "+data[i].Tipo+"</p><p class='precioTexto'>Precio: "+data[i].Precio+"</p></div><div class='card-action'><a href='#'>Ver más</a></div></div></div>";
-        $("div.tituloContenido.card").html(insertar);
-      };
-    }
-  });
-})
-/***** Fin *****/

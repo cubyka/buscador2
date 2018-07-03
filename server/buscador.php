@@ -12,7 +12,12 @@
       str_ireplace donde eliminamos tanto "$" y ",". Ya que causaba problemas para ejecutar la compraracion;
 
       */
-    if ($elemento->Ciudad == $ciudad && $elemento->Tipo == $tipo && str_ireplace(["$",","], "",$elemento->Precio) >= $ini  && str_ireplace(["$",","], "",$elemento->Precio)) {
+
+      // if (str_ireplace(["$",","],"",$elemento->Precio)>= $ini) {
+      //   echo " ".str_ireplace(["$",","],"",$elemento->Precio)." Es mayor o igual a: ".$ini ;
+      // }
+
+    if ($elemento->Ciudad == $ciudad && $elemento->Tipo == $tipo && str_ireplace(["$",","], "",$elemento->Precio) >= $ini  && str_ireplace(["$",","], "",$elemento->Precio)<=$fin) {
       $elementoFiltrado[] = $elemento;
     }
   }
